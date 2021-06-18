@@ -1,18 +1,25 @@
-import homepage from './pages/home.js'
-import settings from './pages/settings.js'
-import help from './pages/help.js'
+import Vue from "vue";
+import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
 
 const routes = [
-    { title: "Home", icon: "home", path: "/", component: homepage },
-    { title: "Settings", icon: "settings", path: "/settings", component: settings},
-    { title: "Help", icon: "help_outline", path: "/help", component: help },
-  ];
+  { name: "home", path: "/", component: () => import('./components/Home.vue') },
+  { name: "about", path: "/about", component: () => import('./components/About.vue')},
+];
 
-  let router = new VueRouter({
-    // mode: 'history', // real path
-    routes, // short for `routes: routes`
-  });
+const router = new VueRouter({
+  base: '/',
+  mode: 'history', // real path
+  routes, // short for `routes: routes`
+});
 
-  export default router;
+/*
+comment out these callback if you want to use `prompt`
+*/
+router.onReady(async() => {
+  const { registerSW } = await import("virtual:pwa-register")
+  registerSW({ immediate: true })
+})
+
+export default router;

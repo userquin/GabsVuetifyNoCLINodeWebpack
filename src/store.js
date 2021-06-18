@@ -1,3 +1,5 @@
+import Vue from "vue";
+import Vuex from "vuex";
 // https://levelup.gitconnected.com/vuex-is-super-simple-vue-js-d8da2e552766
 
 Vue.use(Vuex);
